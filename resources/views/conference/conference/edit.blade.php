@@ -78,7 +78,8 @@ function get_cities(country_id){
 			<input type="text" class="form-control datepicker" name="start_date" id="start_date" value="{{ $conference->start_date }}" placeholder="{{ __('conference date') }}" required>
 			</div>
 		</div>
-#####################################################################################Start
+
+
 		<div class="form-group row">
 			<label class="col-md-4 control-label">{{ __('conference type') }}</label>
 			<div class="col-md-8">
@@ -110,7 +111,8 @@ function get_cities(country_id){
 			</select>
 			</div>
 		</div>
-#####################################################################################End
+
+
 		<div class="form-group row">
 			<label class="col-md-4 control-label">{{ __('conference website') }}</label>
 			<div class="col-md-8">
