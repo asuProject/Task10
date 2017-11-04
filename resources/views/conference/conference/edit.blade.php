@@ -18,6 +18,21 @@
 	@endif
 
 <SCRIPT LANGUAGE="JavaScript">
+	$(document).ready(function(){
+	    $(".organizer").change(function () {
+			var org = $(".organizer").prop("checked", true);
+
+			if (org == "external") {
+				$("#organizers_id").css("display", "block");
+			}else{
+				$("#organizers_id").css("display", "none");
+			}
+
+	    });
+	});
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
 function get_cities(country_id){
 			var options = '';
 			var url = '{!! route('town.ajax.get') !!}';
@@ -97,21 +112,22 @@ function get_cities(country_id){
 			<div class="col-md-8">
 			<div class="row">
 				<div class="col-md-6">
-					<input type="radio" name="organizer" value="internal"> {{ __('internal conference') }}
+					<input type="radio" name="organizer" value="internal" @if(count()==0) checked @endif > 
+					{{ __('internal conference') }}
 				</div>
 				<div class="col-md-6">
-					<input type="radio" name="organizer" value="external"> {{ __('external conference') }}
+					<input type="radio" name="organizer" value="external" @if(count()>0) checked @endif > 
+					{{ __('external conference') }}
 				</div>
 			</div>
 			<select name="organizers_id" style="display: none;" multiple>
 				<option value="">{{ __('choose conference organizer') }}</option>
 				@foreach($organizers as $organizer)
-					<option value="{{$organizer->id}}">{{$organizer->name}}</option>
+					<option value="{{$organizer->id}}" @if(in_array($organizer->id,)) selected @endif>{{$organizer->name}}</option>
 				@endforeach
 			</select>
 			</div>
 		</div>
-
 
 		<div class="form-group row">
 			<label class="col-md-4 control-label">{{ __('conference website') }}</label>

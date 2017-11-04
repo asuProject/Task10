@@ -15,14 +15,30 @@
 
 
 <SCRIPT LANGUAGE="JavaScript">
-	function get_cities(country_id){
+	$(document).ready(function(){
+	    $(".organizer").change(function () {
+			var org = $(".organizer").prop("checked", true);
+
+			if (org == "external") {
+				$("#organizers_id").css("display", "block");
+			}else{
+				$("#organizers_id").css("display", "none");
+			}
+
+	    });
+	});
+</SCRIPT>
+
+<SCRIPT LANGUAGE="JavaScript">
+function get_cities(country_id){
 			var options = '';
 			var url = '{!! route('town.ajax.get') !!}';
 			var city = $('#city');
-      	$.post(url,
-	        {'_token': $('meta[name=csrf-token]').attr('content'),
-	        'country_id': country_id},
-	        	function(data){
+
+      $.post(url,
+        {'_token': $('meta[name=csrf-token]').attr('content'),
+        'country_id': country_id},
+        function(data){
 				 	var towns = data.towns;
 				 	$.each(towns , function(index,value){
 				 		var option = '<option value="'+value.id+'">'+value.name+'</option>';
@@ -30,9 +46,8 @@
 				 	});
 				 	city.empty().html(options);
         });
-  	}
+  }
   </SCRIPT>
-
 
 	@if (count($errors) > 0)
 		<div class="alert">
@@ -99,13 +114,14 @@
 			<div class="col-md-8">
 			<div class="row">
 				<div class="col-md-6">
-					<input type="radio" name="organizer" value="internal"> {{ __('internal conference') }}
+					<input type="radio" name="organizer" class="organizer" value="internal"> {{ __('internal conference') }}
 				</div>
 				<div class="col-md-6">
-					<input type="radio" name="organizer" value="external"> {{ __('external conference') }}
+					<input type="radio" name="organizer" class="organizer" value="external"> {{ __('external conference') }}
 				</div>
 			</div>
-			<select name="organizers_id" style="display: none;" multiple>
+
+			<select id="organizers_id" name="organizers_id" style="display: none;" multiple>
 				<option value="">{{ __('choose conference organizer') }}</option>
 				@foreach($organizers as $organizer)
 					<option value="{{$organizer->id}}">{{$organizer->name}}</option>
